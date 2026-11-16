@@ -1,0 +1,27 @@
+# ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
+managed_components/
+dependencies.lock
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Python (experiments)
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Locally collected sensor data (keep the folder, not its contents)
+experiments/data/*
+!experiments/data/.gitkeep
+
+# Claude Code local settings
+.claude/settings.local.json

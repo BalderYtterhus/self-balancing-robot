@@ -1,0 +1,2 @@
+# Defaults applied when sdkconfig is (re)generated. Commit this file, not sdkconfig.
+CONFIG_IDF_TARGET="esp32c6"

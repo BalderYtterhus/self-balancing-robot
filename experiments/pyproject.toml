@@ -1,0 +1,12 @@
+[project]
+name = "robot-experiments"
+version = "0.1.0"
+description = "Sensor analysis and control simulations for the self-balancing robot"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.6.6",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.5",
+    "pandas>=3.1.1",
+    "scipy>=1.18.1",
+]
