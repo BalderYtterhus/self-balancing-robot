@@ -8,7 +8,12 @@ static const char *TAG = "main";
 void app_main(void)
 {
     ESP_LOGI(TAG, "Self-balancing robot starting");
-    imu_init();
+    esp_err_t err = imu_init();
+
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "IMU init failed, stopped");
+        return;
+    }
 
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
