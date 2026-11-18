@@ -91,5 +91,18 @@ static int16_t to_int16(uint8_t high, uint8_t low)
 }
 
 esp_err_t imu_read(imu_data_t *data){
-    return ESP_ERR_NOT_SUPPORTED;
+    uint8_t buf[12]; 
+    esp_err_t err = imu_read_reg(REG_ACCEL_XOUT_H, buf, sizeof(buf));
+    if (err != ESP_OK){
+        return err;
+    }
+
+    data->ax = to_int16(buf[0], buf[1]) / ACCEL_LSB_PER_G;
+    data->ay = to_int16(buf[2], buf[3]) / ACCEL_LSB_PER_G;
+    data->az = to_int16(buf[4], buf[5]) / ACCEL_LSB_PER_G;
+    data->gx = to_int16(buf[6], buf[7]) / GYRO_LSB_PER_DPS;
+    data->gy = to_int16(buf[8], buf[9]) / GYRO_LSB_PER_DPS;
+    data->gz = to_int16(buf[10], buf[11]) / GYRO_LSB_PER_DPS;
+
+    return ESP_OK;
 }
