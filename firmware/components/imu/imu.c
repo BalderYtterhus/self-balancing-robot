@@ -1,6 +1,8 @@
 #include "imu.h"
 #include "esp_log.h"
 #include "driver/i2c_master.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 #define SDA_PIN GPIO_NUM_7
 #define SCL_PIN GPIO_NUM_5
@@ -69,6 +71,14 @@ esp_err_t imu_init(void)
         ESP_LOGE(TAG, "Unknown data: 0x%02X", response);
         return ESP_ERR_NOT_FOUND;
     }
+    
+    err = imu_write_reg(REG_PWR_MGMT_1, PWR_MGMT_1_WAKE);
+    if (err != ESP_OK){
+        ESP_LOGE(TAG, "Failed to wake the IMU: %s", esp_err_to_name(err));
+        return err;
+    }
+    vTaskDelay(pdMS_TO_TICKS(50));
+
     ESP_LOGI(TAG, "WHO_AM_I: 0x%02X", response);
     return ESP_OK;
 }
