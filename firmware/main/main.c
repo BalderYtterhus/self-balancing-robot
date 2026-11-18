@@ -10,7 +10,7 @@ void app_main(void)
     ESP_LOGI(TAG, "Self-balancing robot starting");
     esp_err_t err = imu_init();
 
-    if (err != ESP_OK){
+    if (err != ESP_OK) {
         ESP_LOGE(TAG, "IMU init failed, stopped");
         return;
     }
