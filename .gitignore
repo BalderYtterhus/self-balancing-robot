@@ -22,6 +22,7 @@ __pycache__/
 # Locally collected sensor data (keep the folder, not its contents)
 experiments/data/*
 !experiments/data/.gitkeep
+!experiments/data/sample/
 
 # Claude Code local settings
 .claude/settings.local.json
