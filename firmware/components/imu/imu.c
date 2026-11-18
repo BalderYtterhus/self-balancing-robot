@@ -12,7 +12,7 @@
 #define WHO_AM_I_VALUE 0xEA
 #define REG_PWR_MGMT_1 0x06 // Power control
 #define REG_ACCEL_XOUT_H 0x2D //Accelerometer bytes
-#define REG_GYRO_XOUT_H 0x33 // Gyrometer bytes
+// #define REG_GYRO_XOUT_H 0x33  Gyrometer bytes
 #define REG_BANK_SEL 0x7F // Selects register bank
 #define PWR_MGMT_1_WAKE 0x01
 #define ACCEL_LSB_PER_G   16384.0f   // ±2 g range (default)
@@ -22,12 +22,14 @@ static const char *TAG = "imu";
 static i2c_master_bus_handle_t bus_handle;
 static i2c_master_dev_handle_t dev_handle;
 
-static esp_err_t imu_read_reg(uint8_t reg, uint8_t *buf, size_t len){
+static esp_err_t imu_read_reg(uint8_t reg, uint8_t *buf, size_t len)
+{
     esp_err_t call = i2c_master_transmit_receive(dev_handle, &reg, 1, buf, len, I2C_TIMEOUT_MS);
     return call;
 }
 
-static esp_err_t imu_write_reg(uint8_t reg, uint8_t value){
+static esp_err_t imu_write_reg(uint8_t reg, uint8_t value)
+{
     uint8_t buf[2]  = {reg, value};
     esp_err_t result = i2c_master_transmit(dev_handle, buf, sizeof(buf), I2C_TIMEOUT_MS);
     return result;
