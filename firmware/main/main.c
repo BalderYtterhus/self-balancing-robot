@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
@@ -15,7 +17,21 @@ void app_main(void)
         return;
     }
 
+    imu_data_t data;
+    printf("time_us,ax,ay,az,gx,gy,gz\n");
+    TickType_t last_wake = xTaskGetTickCount();
+
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        err = imu_read(&data);
+        if (err == ESP_OK) {
+            printf("%lld,%.3f,%.3f,%.3f,%.2f,%.2f,%.2f\n",
+                esp_timer_get_time(),
+                data.ax, data.ay, data.az,
+                data.gx, data.gy, data.gz);
+        } else {
+            ESP_LOGW(TAG, "Failed to read data: %s", esp_err_to_name(err));
+        }
+
+        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(10));
     }
 }
