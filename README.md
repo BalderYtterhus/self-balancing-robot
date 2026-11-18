@@ -2,7 +2,43 @@
 
 A two-wheeled self-balancing robot built on the ESP32-C6, with an ICM-20948 IMU over I²C.
 
-Status: project skeleton only. The firmware boots and idles; no sensor or motor code yet.
+### Implemented so far
+- ESP-IDF project setup is working
+- I2C communication with the IMU is working
+- The **ICM-20948 driver is implemented**
+- The IMU is successfully detected at address **`0x69`**
+- Sensor data is currently being **streamed at 100 Hz**
+
+### In progress / next steps
+- Clean up and modularize the firmware further
+- Add sensor fusion / tilt estimation
+- Add motor driver integration
+- Implement PID control for balancing
+
+## Wiring
+
+Current IMU wiring (reference for this repo):
+
+- **SDA** → **GPIO 7**
+- **SCL** → **GPIO 5**
+- **I2C address** → **`0x69`**
+
+If the hardware is rewired later, this section should be updated to stay in sync with the actual build.
+
+## Circuit overview
+
+```text
+ESP32-C6                         ICM-20948 IMU
+---------                        -------------
+GPIO 7   ----------------------> SDA
+GPIO 5   ----------------------> SCL
+3.3V     ----------------------> VCC
+GND      ----------------------> GND
+
+I2C address: 0x69
+Streaming rate: 100 Hz 
+```
+
 
 ## Layout
 
