@@ -1,10 +1,10 @@
 # Imports
-lazy import argparse
-lazy import time
-lazy from datetime import datetime
-lazy from pathlib import Path
+import argparse
+import time
+from datetime import datetime
+from pathlib import Path
 
-lazy import serial
+import serial
 
 parser = argparse.ArgumentParser(
     description="Record IMU-data from ESP32-C6"
@@ -51,4 +51,15 @@ with serial.Serial(args.port, 115200, timeout=1) as ser:
             header = line
             break
 
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(header + "\n")
 
+        end = time.monotonic() + args.seconds
+        count = 0
+
+        while time.monotonic() < end:
+            line = ser.readline().decode(errors="replace").strip()
+            parts = line.split(",")
+            if len(parts)==7 and parts[0].isdigit:
+                f.write(line + "\n")
+                count += 1
