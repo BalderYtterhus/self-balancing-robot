@@ -1,2 +1,5 @@
 # Defaults applied when sdkconfig is (re)generated. Commit this file, not sdkconfig.
 CONFIG_IDF_TARGET="esp32c6"
+
+# Board has 16 MB flash (detected by the bootloader on 2026-11-18)
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
