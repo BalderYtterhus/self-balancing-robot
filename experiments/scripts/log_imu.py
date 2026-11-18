@@ -26,12 +26,14 @@ parser.add_argument(
 parser.add_argument(
     "--seconds",
     type=float, 
-    default=60
+    default=60,
+    help="How many seconds you wish to record"
 )
 args = parser.parse_args()
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-path = f"{args.name}_{datetime.now():%Y-%m-%d_%H%M}.csv"
+DATA_DIR.mkdir(exist_ok=True)
+path = DATA_DIR / f"{args.name}_{datetime.now():%Y-%m-%d_%H%M}.csv"
 
 with serial.Serial(args.port, 115200, timeout=1) as ser:
     ser.dtr = False
