@@ -16,7 +16,7 @@ Requires [uv](https://docs.astral.sh/uv/). From this directory:
 uv sync
 ```
 
-This creates `.venv/` with Python 3.13 and the locked dependencies.
+This creates `.venv/` with Python 3.15 and the locked dependencies.
 
 ## Run Jupyter
 
