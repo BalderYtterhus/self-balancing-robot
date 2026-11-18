@@ -12,10 +12,22 @@
 #define REG_ACCEL_XOUT_H 0x2D //Accelerometer bytes
 #define REG_GYRO_XOUT_H 0x33 // Gyrometer bytes
 #define REG_BANK_SEL 0x7F // Selects register bank
+#define PWR_MGMT_1_WAKE 0x01
 
 static const char *TAG = "imu";
 static i2c_master_bus_handle_t bus_handle;
 static i2c_master_dev_handle_t dev_handle;
+
+static esp_err_t imu_read_reg(uint8_t reg, uint8_t *buf, size_t len){
+    esp_err_t call = i2c_master_transmit_receive(dev_handle, &reg, 1, buf, len, I2C_TIMEOUT_MS);
+    return call;
+}
+
+static esp_err_t imu_write_reg(uint8_t reg, uint8_t value){
+    uint8_t buf[2]  = {reg, value};
+    esp_err_t result = i2c_master_transmit(dev_handle, buf, sizeof(buf), I2C_TIMEOUT_MS);
+    return result;
+}
 
 esp_err_t imu_init(void)
 {
@@ -45,10 +57,9 @@ esp_err_t imu_init(void)
         return err;
     }
 
-    uint8_t register_address = WHO_AM_I;
     uint8_t response;
 
-    err = i2c_master_transmit_receive(dev_handle, &register_address, 1, &response, 1, I2C_TIMEOUT_MS);
+    err = imu_read_reg(WHO_AM_I, &response, 1);
 
     if (err != ESP_OK){
         ESP_LOGE(TAG, "Failed to receive data: %s", esp_err_to_name(err));
