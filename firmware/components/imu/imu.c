@@ -15,6 +15,8 @@
 #define REG_GYRO_XOUT_H 0x33 // Gyrometer bytes
 #define REG_BANK_SEL 0x7F // Selects register bank
 #define PWR_MGMT_1_WAKE 0x01
+#define ACCEL_LSB_PER_G   16384.0f   // ±2 g range (default)
+#define GYRO_LSB_PER_DPS  131.0f     // ±250 dps range (default)
 
 static const char *TAG = "imu";
 static i2c_master_bus_handle_t bus_handle;
@@ -81,6 +83,11 @@ esp_err_t imu_init(void)
 
     ESP_LOGI(TAG, "WHO_AM_I: 0x%02X", response);
     return ESP_OK;
+}
+
+static int16_t to_int16(uint8_t high, uint8_t low)
+{
+    return (int16_t)((high << 8) | low);
 }
 
 esp_err_t imu_read(imu_data_t *data){
