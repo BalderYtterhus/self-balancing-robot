@@ -1,0 +1,10 @@
+{
+	"autodeskProduct": "Fusion",
+	"type": "script",
+	"author": "",
+	"description": {
+		"": "First sketch of the self-balancing robot's base plate, with motor and wheel outlines."
+	},
+	"supportedOS": "windows|mac",
+	"editEnabled": true
+}
