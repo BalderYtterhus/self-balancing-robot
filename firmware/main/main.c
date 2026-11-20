@@ -25,9 +25,9 @@ void app_main(void)
         err = imu_read(&data);
         if (err == ESP_OK) {
             printf("%lld,%.3f,%.3f,%.3f,%.2f,%.2f,%.2f\n",
-                esp_timer_get_time(),
-                data.ax, data.ay, data.az,
-                data.gx, data.gy, data.gz);
+                   esp_timer_get_time(),
+                   data.ax, data.ay, data.az,
+                   data.gx, data.gy, data.gz);
         } else {
             ESP_LOGW(TAG, "Failed to read data: %s", esp_err_to_name(err));
         }
