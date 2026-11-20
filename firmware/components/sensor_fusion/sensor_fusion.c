@@ -18,7 +18,7 @@ static float gyro_bias;  // average gy while standing still, degrees/s
 static float accel_angle(const imu_data_t *data)
 {
     // TODO: atan2(ax, sqrt(ay² + az²)), converted to degrees
-    return 0.0f;
+    return atan2f(data->ax, sqrtf(data->ay*data->ay + data->az*data->az))*RAD_TO_DEG;
 }
 
 esp_err_t sensor_fusion_init(int samples)
