@@ -44,7 +44,9 @@ esp_err_t sensor_fusion_init(int samples)
 float sensor_fusion_update(const imu_data_t *data, float dt)
 {
     // TODO: rate = -(gy - gyro_bias)   (gy's sign is opposite to pitch)
+    float rate = -(data->gy - gyro_bias);
     // TODO: angle = ALPHA * (angle + rate * dt) + (1 - ALPHA) * accel_angle
+    angle = ALPHA * (angle + rate *dt) + (1 - ALPHA) * accel_angle(data);
     return angle;
 }
 
