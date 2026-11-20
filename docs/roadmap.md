@@ -47,8 +47,8 @@ Tools: soldering iron, solder, multimeter.
 - [x] Record `tilt_fast` (quick tilts, same axis)
 - [x] Notebook 2: complementary filter in Python
 - [x] Notebook 2: compare α values and choose one
-- [ ] `sensor_fusion` component in C
-- [ ] Gyro bias calibration at startup (average while standing still)
+- [x] `sensor_fusion` component in C
+- [x] Gyro bias calibration at startup (average while standing still)
 - [ ] Print and log the filtered angle; compare with notebook 2
 - [ ] `imu_init`: retry `WHO_AM_I` a few times before giving up
 
