@@ -60,7 +60,7 @@ with serial.Serial(args.port, 115200, timeout=1) as ser:
         while time.monotonic() < end:
             line = ser.readline().decode(errors="replace").strip()
             parts = line.split(",")
-            if len(parts)==7 and parts[0].isdigit():
+            if len(parts)==8 and parts[0].isdigit():
                 f.write(line + "\n")
                 count += 1
 print(f"Wrote {count} samples to {path}")
