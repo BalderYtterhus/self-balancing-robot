@@ -17,17 +17,27 @@ static float gyro_bias;  // average gy while standing still, degrees/s
 /* Pitch angle from the accelerometer alone, in degrees. */
 static float accel_angle(const imu_data_t *data)
 {
-    // TODO: atan2(ax, sqrt(ay² + az²)), converted to degrees
     return atan2f(data->ax, sqrtf(data->ay*data->ay + data->az*data->az))*RAD_TO_DEG;
 }
 
 esp_err_t sensor_fusion_init(int samples)
 {
-    // TODO: read the IMU `samples` times, CALIBRATION_PERIOD_MS apart,
-    //       and add up gy. Return the error if a read fails.
-    // TODO: gyro_bias = average of gy
-    // TODO: start the angle at the accelerometer angle of the last reading
-    // TODO: log the bias and the starting angle
+    imu_data_t data;
+    float sum = 0;
+
+    for (int i = 0; i < samples; i++) {
+        esp_err_t err = imu_read(&data);
+
+        if (err != ESP_OK) {
+            ESP_LOGE(TAG, "Failed to read IMU data: %s", esp_err_to_name(err));
+            return err;
+        }
+        sum += data.gy;
+        vTaskDelay(pdMS_TO_TICKS(CALIBRATION_PERIOD_MS));
+    }
+    gyro_bias = sum/(float)samples;
+    angle = accel_angle(&data);
+    ESP_LOGI(TAG, "Gyro bias: %.2f dps, start angle: %.2f deg", gyro_bias, angle);
     return ESP_OK;
 }
 
